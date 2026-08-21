@@ -233,15 +233,15 @@ function App() {
             </div>
             <div className="map-frame reveal-card">
               <iframe
-                title="Lokasi acara di Apotek Lestari"
-                src="https://www.google.com/maps?q=APOTEK+LESTARI,+-4.2620491,104.5679834&z=17&output=embed"
+                title="Lokasi acara di titik -4.2620437, 104.5654085"
+                src="https://www.google.com/maps?q=-4.2620437,104.5654085&z=18&output=embed"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
             <a
               className="primary-button maps-button reveal-item"
-              href="https://www.google.com/maps/place/APOTEK+LESTARI/@-4.262044,104.565409,15z/data=!4m12!1m5!3m4!2zNMKwMTUnNDMuNCJTIDEwNMKwMzMnNTUuNSJF!8m2!3d-4.2620437!4d104.5654085!3m5!1s0x2e38e1f41c6393cf:0x2b579ef980784b6f!8m2!3d-4.2620491!4d104.5679834!16s%2Fg%2F11k9s67b4f?hl=id-ID&entry=ttu&g_ep=EgoyMDI2MDgxNy4wIKXMDSoASAFQAw%3D%3D"
+              href="https://www.google.com/maps/search/?api=1&query=-4.2620437%2C104.5654085"
               target="_blank"
               rel="noreferrer"
             >
