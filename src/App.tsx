@@ -36,10 +36,32 @@ const storyItems = [
   },
 ]
 
+const eventDate = new Date('2026-09-20T08:00:00+07:00').getTime()
+
+const getCountdown = () => {
+  const remaining = Math.max(0, eventDate - Date.now())
+  const totalSeconds = Math.floor(remaining / 1000)
+
+  return {
+    days: Math.floor(totalSeconds / 86400),
+    hours: Math.floor((totalSeconds % 86400) / 3600),
+    minutes: Math.floor((totalSeconds % 3600) / 60),
+  }
+}
+
 function App() {
   const [invitationOpen, setInvitationOpen] = useState(false)
+  const [countdown, setCountdown] = useState(getCountdown)
   const [musicPlaying, setMusicPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
+
+  useEffect(() => {
+    const countdownTimer = window.setInterval(() => {
+      setCountdown(getCountdown())
+    }, 1000)
+
+    return () => window.clearInterval(countdownTimer)
+  }, [])
 
   useEffect(() => {
     const audio = audioRef.current
@@ -200,15 +222,15 @@ function App() {
 
           <div className="countdown reveal-item">
             <div className="count-box reveal-item">
-              <span>162</span>
+              <span>{countdown.days}</span>
               <small>HARI</small>
             </div>
             <div className="count-box split reveal-item">
-              <span>07</span>
+              <span>{String(countdown.hours).padStart(2, '0')}</span>
               <small>JAM</small>
             </div>
             <div className="count-box split reveal-item">
-              <span>05</span>
+              <span>{String(countdown.minutes).padStart(2, '0')}</span>
               <small>MENIT</small>
             </div>
           </div>
