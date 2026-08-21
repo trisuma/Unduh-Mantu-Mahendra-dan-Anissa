@@ -38,7 +38,6 @@ const storyItems = [
 
 function App() {
   const [invitationOpen, setInvitationOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState('hero')
   const [musicPlaying, setMusicPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
 
@@ -81,28 +80,6 @@ function App() {
     return () => observer.disconnect()
   }, [invitationOpen])
 
-  useEffect(() => {
-    const sectionIds = ['hero', 'schedule', 'gallery']
-    const updateActiveSection = () => {
-      const focusLine = window.innerHeight * 0.35
-      let visibleSection = 'hero'
-
-      sectionIds.forEach((sectionId) => {
-        const section = document.getElementById(sectionId)
-        if (section && section.getBoundingClientRect().top <= focusLine) {
-          visibleSection = sectionId
-        }
-      })
-
-      setActiveSection(visibleSection)
-    }
-
-    updateActiveSection()
-    window.addEventListener('scroll', updateActiveSection, { passive: true })
-
-    return () => window.removeEventListener('scroll', updateActiveSection)
-  }, [invitationOpen])
-
   const handleOpenInvitation = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault()
     setInvitationOpen(true)
@@ -143,10 +120,7 @@ function App() {
 
       <section className="hero-section" id="hero">
         <div className="hero-image-wrap">
-          <img
-            alt="Mahendra and Annisa wedding hero image"
-            src={heroImage}
-          />
+          <img alt="Mahendra and Annisa wedding hero image" src={heroImage} />
           <div className="hero-overlay" />
         </div>
 
@@ -250,6 +224,33 @@ function App() {
         </div>
         </section>
 
+        <section className="maps-section reveal" id="maps">
+          <div className="maps-inner">
+            <div className="maps-heading reveal-item">
+              <p className="eyebrow">LOKASI ACARA</p>
+              <h2>Temukan Lokasi Kami</h2>
+              <p>Silakan buka Google Maps untuk mendapatkan petunjuk arah menuju lokasi acara.</p>
+            </div>
+            <div className="map-frame reveal-card">
+              <iframe
+                title="Lokasi acara di Apotek Lestari"
+                src="https://www.google.com/maps?q=APOTEK+LESTARI,+-4.2620491,104.5679834&z=17&output=embed"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+            <a
+              className="primary-button maps-button reveal-item"
+              href="https://www.google.com/maps/place/APOTEK+LESTARI/@-4.262044,104.565409,15z/data=!4m12!1m5!3m4!2zNMKwMTUnNDMuNCJTIDEwNMKwMzMnNTUuNSJF!8m2!3d-4.2620437!4d104.5654085!3m5!1s0x2e38e1f41c6393cf:0x2b579ef980784b6f!8m2!3d-4.2620491!4d104.5679834!16s%2Fg%2F11k9s67b4f?hl=id-ID&entry=ttu&g_ep=EgoyMDI2MDgxNy4wIKXMDSoASAFQAw%3D%3D"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="material-symbols-outlined">location_on</span>
+              BUKA GOOGLE MAPS
+            </a>
+          </div>
+        </section>
+
         <section className="story-section reveal" id="story">
         <div className="story-inner">
           <h2 className="story-heading reveal-item">
@@ -346,36 +347,6 @@ function App() {
         </div>
         </section>
       </div>
-
-      <nav className="mobile-nav" aria-label="Mobile navigation">
-        <a
-          className={`mobile-link ${activeSection === 'hero' ? 'active' : ''}`}
-          href="#hero"
-          aria-current={activeSection === 'hero' ? 'page' : undefined}
-          onClick={() => setActiveSection('hero')}
-        >
-          <span className="material-symbols-outlined">home</span>
-          <span>Home</span>
-        </a>
-        <a
-          className={`mobile-link ${activeSection === 'schedule' ? 'active' : ''}`}
-          href="#schedule"
-          aria-current={activeSection === 'schedule' ? 'page' : undefined}
-          onClick={() => setActiveSection('schedule')}
-        >
-          <span className="material-symbols-outlined">calendar_today</span>
-          <span>Schedule</span>
-        </a>
-        <a
-          className={`mobile-link ${activeSection === 'gallery' ? 'active' : ''}`}
-          href="#gallery"
-          aria-current={activeSection === 'gallery' ? 'page' : undefined}
-          onClick={() => setActiveSection('gallery')}
-        >
-          <span className="material-symbols-outlined">photo_library</span>
-          <span>Gallery</span>
-        </a>
-      </nav>
 
       <audio ref={audioRef} src={weddingMusic} loop preload="auto" />
 
