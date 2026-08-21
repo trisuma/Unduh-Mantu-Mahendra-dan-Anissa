@@ -233,15 +233,15 @@ function App() {
             </div>
             <div className="map-frame reveal-card">
               <iframe
-                title="Lokasi acara di titik -4.2620437, 104.5654085"
-                src="https://www.google.com/maps?q=-4.2620437,104.5654085&z=18&output=embed"
+                title="Lokasi acara di titik -4.261974, 104.568166"
+                src="https://www.google.com/maps?q=-4.261974,104.568166&z=18&output=embed"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
             <a
               className="primary-button maps-button reveal-item"
-              href="https://www.google.com/maps/search/?api=1&query=-4.2620437%2C104.5654085"
+              href="https://www.google.com/maps/search/?api=1&query=-4.261974%2C104.568166"
               target="_blank"
               rel="noreferrer"
             >
