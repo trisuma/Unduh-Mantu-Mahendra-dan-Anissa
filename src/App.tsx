@@ -9,6 +9,10 @@ import galleryImage2 from './assets/3745ad36-acad-460a-b6e1-4caff4fefe8b.jpg'
 import galleryImage3 from './assets/44b59c61-5668-45a1-af3d-e9391f212932.jpg'
 import galleryImage4 from './assets/45ac179b-bab8-427e-870d-349af2b84fdd.jpg'
 import galleryImage5 from './assets/66957763-d81d-45bd-a1f7-94911fcb5adc.jpg'
+import batikAwan from './assets/batik-awan.webp'
+import batikBunga from './assets/batik-bunga.png'
+import bungaBatik from './assets/bunga-batik2.png'
+import gununganWayang from './assets/gunungan wayang .png'
 
 const storyItems = [
   {
@@ -88,7 +92,7 @@ function App() {
     if (!invitationOpen) return
 
     const revealItems = Array.from(
-      document.querySelectorAll<HTMLElement>('.reveal, .reveal-card, .reveal-item'),
+      document.querySelectorAll<HTMLElement>('.reveal, .reveal-card, .reveal-item, .ornament'),
     )
 
     if (!revealItems.length) return
@@ -98,7 +102,8 @@ function App() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-visible')
-            observer.unobserve(entry.target)
+            } else {
+              entry.target.classList.remove('is-visible')
           }
         })
       },
@@ -109,7 +114,7 @@ function App() {
     )
 
     revealItems.forEach((item, index) => {
-      item.style.transitionDelay = `${index * 120}ms`
+      item.style.transitionDelay = item.classList.contains('ornament') ? '0ms' : `${index * 120}ms`
       observer.observe(item)
     })
 
@@ -207,10 +212,15 @@ function App() {
         <div className="nav-spacer" aria-hidden="true" />
       </nav>
 
-      <section className="hero-section" id="hero">
+      <section className={`hero-section ${invitationOpen ? 'invitation-started' : ''}`} id="hero">
         <div className="hero-image-wrap">
           <img alt="Mahendra and Annisa wedding hero image" src={heroImage} />
           <div className="hero-overlay" />
+        </div>
+
+        <div className="hero-wayang-transition" aria-hidden="true">
+          <img className="hero-wayang hero-wayang-left" src={gununganWayang} alt="" />
+          <img className="hero-wayang hero-wayang-right" src={gununganWayang} alt="" />
         </div>
 
         <div className="hero-content">
@@ -226,6 +236,7 @@ function App() {
 
       <div className={`invitation-shell ${invitationOpen ? 'is-open' : ''}`}>
         <section className="profiles-section reveal" id="profiles">
+        <img className="section-ornament ornament-gunungan" src={gununganWayang} alt="" aria-hidden="true" />
         <div className="section-inner">
           <div className="intro-copy reveal-item">
             <h2 className="quote-title">Assalamu'alaikum Warahmatullahi Wabarakatuh</h2>
@@ -264,6 +275,7 @@ function App() {
         </section>
 
         <section className="quote-section reveal">
+        <img className="section-ornament ornament-cloud" src={batikAwan} alt="" aria-hidden="true" />
         <div className="quote-bg-wrap">
           <img
             alt="Soft blurred floral arrangement representing romance and peace"
@@ -283,6 +295,7 @@ function App() {
       </section>
 
       <section className="schedule-section reveal" id="schedule">
+        <img className="section-ornament ornament-flower ornament-flower-schedule" src={bungaBatik} alt="" aria-hidden="true" />
         <div className="schedule-pattern" aria-hidden="true" />
         <div className="schedule-card glass-panel gold-border reveal-card">
           <h2>Unduh Mantu Schedule</h2>
@@ -341,6 +354,7 @@ function App() {
         </section>
 
         <section className="story-section reveal" id="story">
+        <img className="section-ornament ornament-batik ornament-batik-story" src={batikBunga} alt="" aria-hidden="true" />
         <div className="story-inner">
           <h2 className="story-heading reveal-item">
             <span>Our Love Story</span>
@@ -370,6 +384,7 @@ function App() {
         </section>
 
         <section className="gallery-section reveal" id="gallery">
+        <img className="section-ornament ornament-flower ornament-flower-gallery" src={bungaBatik} alt="" aria-hidden="true" />
         <div className="gallery-inner">
           <h2 className="reveal-item">Our Gallery</h2>
 
@@ -415,6 +430,7 @@ function App() {
         </section>
 
         <section className="gift-section reveal" id="gift">
+        <img className="section-ornament ornament-batik ornament-batik-gift" src={batikBunga} alt="" aria-hidden="true" />
           <div className="gift-inner">
             <div className="gift-heading reveal-item">
               <p className="eyebrow">UNGKAPAN KASIH</p>
@@ -446,6 +462,7 @@ function App() {
         </section>
 
         <section className="wishes-section reveal" id="wishes">
+          <img className="section-ornament ornament-flower ornament-flower-wishes" src={bungaBatik} alt="" aria-hidden="true" />
           <div className="wishes-inner">
             <div className="wishes-heading reveal-item">
               <p className="eyebrow">DOA DAN UCAPAN</p>
@@ -515,6 +532,7 @@ function App() {
         </section>
 
         <section className="closing-section reveal">
+        <img className="section-ornament ornament-cloud ornament-cloud-closing" src={batikAwan} alt="" aria-hidden="true" />
         <div className="closing-image-wrap">
           <img
             alt="Happy couple portrait looking away in soft lighting"
