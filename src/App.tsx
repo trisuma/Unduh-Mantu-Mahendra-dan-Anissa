@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState, type MouseEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent, type MouseEvent } from 'react'
 import './App.css'
+import { supabase } from './lib/supabase'
 import heroImage from './assets/07a80012-6114-4aa3-a4c4-7da716aac2ae.jpg'
 import weddingMusic from './assets/Bruno Mars - Risk It All.mp3'
 import musicCover from './assets/unduh mantu alakh mahen dan mbk annisa.png'
@@ -38,6 +39,14 @@ const storyItems = [
 
 const eventDate = new Date('2026-09-20T08:00:00+07:00').getTime()
 
+type Wish = {
+  id?: number
+  name: string
+  message: string
+  attendance: 'Hadir' | 'Tidak Hadir'
+  created_at?: string
+}
+
 const getCountdown = () => {
   const remaining = Math.max(0, eventDate - Date.now())
   const totalSeconds = Math.floor(remaining / 1000)
@@ -53,6 +62,11 @@ function App() {
   const [invitationOpen, setInvitationOpen] = useState(false)
   const [countdown, setCountdown] = useState(getCountdown)
   const [musicPlaying, setMusicPlaying] = useState(false)
+  const [wishes, setWishes] = useState<Wish[]>([])
+  const [wishesLoading, setWishesLoading] = useState(false)
+  const [wishError, setWishError] = useState('')
+  const [wishSuccess, setWishSuccess] = useState(false)
+  const [wishSending, setWishSending] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
 
   useEffect(() => {
@@ -102,6 +116,28 @@ function App() {
     return () => observer.disconnect()
   }, [invitationOpen])
 
+  useEffect(() => {
+    if (!invitationOpen || !supabase) return
+    const client = supabase
+
+    const loadWishes = async () => {
+      setWishesLoading(true)
+      const { data, error } = await client
+        .from('wishes')
+        .select('id, name, message, attendance, created_at')
+        .order('created_at', { ascending: false })
+
+      if (error) {
+        setWishError('Ucapan belum dapat dimuat. Silakan coba lagi nanti.')
+      } else {
+        setWishes(data as Wish[])
+      }
+      setWishesLoading(false)
+    }
+
+    void loadWishes()
+  }, [invitationOpen])
+
   const handleOpenInvitation = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault()
     setInvitationOpen(true)
@@ -126,6 +162,37 @@ function App() {
       audio.pause()
       setMusicPlaying(false)
     }
+  }
+
+  const handleWishSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (!supabase) {
+      setWishError('Koneksi database belum dikonfigurasi.')
+      return
+    }
+
+    const form = event.currentTarget
+    const formData = new FormData(form)
+    const name = String(formData.get('name') ?? '').trim()
+    const message = String(formData.get('message') ?? '').trim()
+    const attendance = formData.get('attendance') === 'Tidak Hadir' ? 'Tidak Hadir' : 'Hadir'
+
+    setWishError('')
+    setWishSuccess(false)
+    setWishSending(true)
+    const { error } = await supabase.from('wishes').insert({ name, message, attendance })
+
+    if (error) {
+      setWishError('Ucapan belum berhasil dikirim. Silakan coba lagi.')
+    } else {
+      form.reset()
+      setWishes((currentWishes) => [
+        { name, message, attendance, created_at: new Date().toISOString() },
+        ...currentWishes,
+      ])
+      setWishSuccess(true)
+    }
+    setWishSending(false)
   }
 
   return (
@@ -238,7 +305,7 @@ function App() {
           <div className="event-block reveal-item">
             <h3>UNDUH MANTU</h3>
             <p className="event-date">MINGGU, 20 SEPTEMBER 2026</p>
-            <p className="event-time">08.00 - 10.00 WIB</p>
+            <p className="event-time">08.00 - selesai</p>
             <p className="event-address">
               RT./RW/RW.002/005, Sukabumi, Kec. Buay Bahuga, Kabupaten Way Kanan, Lampung 34767
             </p>
@@ -347,6 +414,106 @@ function App() {
         </div>
         </section>
 
+        <section className="gift-section reveal" id="gift">
+          <div className="gift-inner">
+            <div className="gift-heading reveal-item">
+              <p className="eyebrow">UNGKAPAN KASIH</p>
+              <h2>Gift</h2>
+              <p>
+                Doa Restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika memberi
+                adalah ungkapan tanda kasih Anda, Anda dapat memberi kado secara cashless.
+              </p>
+            </div>
+
+            <div className="gift-grid">
+              <article className="gift-card reveal-card">
+                <span className="material-symbols-outlined gift-icon">account_balance</span>
+                <h3>Mahendra</h3>
+                <p className="gift-bank">BRI</p>
+                <p className="gift-account">028501088671504</p>
+                <p className="gift-owner">MAHENDRA SURYA TRISUMA</p>
+              </article>
+
+              <article className="gift-card reveal-card">
+                <span className="material-symbols-outlined gift-icon">account_balance</span>
+                <h3>Annisa</h3>
+                <p className="gift-bank">BCA</p>
+                <p className="gift-account">3520522769</p>
+                <p className="gift-owner">ANNISA FIRDAUS</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section className="wishes-section reveal" id="wishes">
+          <div className="wishes-inner">
+            <div className="wishes-heading reveal-item">
+              <p className="eyebrow">DOA DAN UCAPAN</p>
+              <h2>Best Wishes</h2>
+              <p>Sampaikan doa dan ucapan terbaik Anda</p>
+            </div>
+
+            <form className="wishes-form reveal-card" onSubmit={handleWishSubmit}>
+              <label className="field-group">
+                <span>Nama</span>
+                <input name="name" type="text" placeholder="Nama Anda" required />
+              </label>
+              <label className="field-group">
+                <span>Ucapan</span>
+                <textarea
+                  name="message"
+                  placeholder="Tuliskan doa dan ucapan terbaik Anda..."
+                  rows={4}
+                  required
+                />
+              </label>
+              <fieldset className="field-group attendance-group">
+                <span>Konfirmasi Kehadiran</span>
+                <div className="attendance-options">
+                  <label className="attendance-option">
+                    <input name="attendance" type="radio" value="Hadir" defaultChecked required />
+                    <span className="attendance-choice">
+                      <span className="material-symbols-outlined">check</span>
+                      Hadir
+                    </span>
+                  </label>
+                  <label className="attendance-option">
+                    <input name="attendance" type="radio" value="Tidak Hadir" />
+                    <span className="attendance-choice">
+                      <span className="material-symbols-outlined">close</span>
+                      Tidak Hadir
+                    </span>
+                  </label>
+                </div>
+              </fieldset>
+              <button className="primary-button wishes-button" type="submit" disabled={wishSending}>
+                <span className="material-symbols-outlined">send</span>
+                {wishSending ? 'MENGIRIM...' : 'KIRIM UCAPAN'}
+              </button>
+              {wishError && <p className="wish-error" role="alert">{wishError}</p>}
+            </form>
+
+            <div className="wishes-list reveal-item" aria-live="polite">
+              <h3>Ucapan dan Doa</h3>
+              {wishesLoading ? (
+                <p className="wishes-empty">Memuat ucapan...</p>
+              ) : wishes.length === 0 ? (
+                <p className="wishes-empty">Belum ada ucapan. Jadilah yang pertama menyampaikan doa.</p>
+              ) : (
+                wishes.map((wish, index) => (
+                  <article className="wish-card" key={`${wish.name}-${index}`}>
+                    <div className="wish-card-heading">
+                      <h4>{wish.name}</h4>
+                      <span className="wish-attendance">{wish.attendance}</span>
+                    </div>
+                    <p>{wish.message}</p>
+                  </article>
+                ))
+              )}
+            </div>
+          </div>
+        </section>
+
         <section className="closing-section reveal">
         <div className="closing-image-wrap">
           <img
@@ -369,6 +536,20 @@ function App() {
         </div>
         </section>
       </div>
+
+      {wishSuccess && (
+        <div className="wish-modal-backdrop" role="presentation">
+          <div className="wish-modal" role="alertdialog" aria-modal="true" aria-labelledby="wish-modal-title">
+            <div className="wish-modal-check" aria-hidden="true">
+              <span className="material-symbols-outlined">check</span>
+            </div>
+            <h3 id="wish-modal-title">Pesan Anda sudah dikirim</h3>
+            <button className="primary-button wish-modal-button" type="button" onClick={() => setWishSuccess(false)}>
+              TUTUP
+            </button>
+          </div>
+        </div>
+      )}
 
       <audio ref={audioRef} src={weddingMusic} loop preload="auto" />
 
