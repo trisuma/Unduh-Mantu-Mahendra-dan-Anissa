@@ -71,6 +71,7 @@ function App() {
   const [wishError, setWishError] = useState('')
   const [wishSuccess, setWishSuccess] = useState(false)
   const [wishSending, setWishSending] = useState(false)
+  const [copiedAccount, setCopiedAccount] = useState('')
   const audioRef = useRef<HTMLAudioElement>(null)
 
   useEffect(() => {
@@ -166,6 +167,16 @@ function App() {
     } else {
       audio.pause()
       setMusicPlaying(false)
+    }
+  }
+
+  const handleCopyAccount = async (accountNumber: string) => {
+    try {
+      await navigator.clipboard.writeText(accountNumber)
+      setCopiedAccount(accountNumber)
+      window.setTimeout(() => setCopiedAccount(''), 1800)
+    } catch {
+      setWishError('Nomor rekening belum berhasil disalin.')
     }
   }
 
@@ -446,7 +457,18 @@ function App() {
                 <span className="material-symbols-outlined gift-icon">account_balance</span>
                 <h3>Mahendra</h3>
                 <p className="gift-bank">BRI</p>
-                <p className="gift-account">028501088671504</p>
+                <div className="gift-account-row">
+                  <p className="gift-account">028501088671504</p>
+                  <button
+                    className="copy-account-button"
+                    type="button"
+                    aria-label="Salin nomor rekening Mahendra"
+                    onClick={() => handleCopyAccount('028501088671504')}
+                  >
+                    <span className="material-symbols-outlined">content_copy</span>
+                    {copiedAccount === '028501088671504' ? 'COPIED' : 'COPY'}
+                  </button>
+                </div>
                 <p className="gift-owner">MAHENDRA SURYA TRISUMA</p>
               </article>
 
@@ -454,7 +476,18 @@ function App() {
                 <span className="material-symbols-outlined gift-icon">account_balance</span>
                 <h3>Annisa</h3>
                 <p className="gift-bank">BCA</p>
-                <p className="gift-account">3520522769</p>
+                <div className="gift-account-row">
+                  <p className="gift-account">3520522769</p>
+                  <button
+                    className="copy-account-button"
+                    type="button"
+                    aria-label="Salin nomor rekening Annisa"
+                    onClick={() => handleCopyAccount('3520522769')}
+                  >
+                    <span className="material-symbols-outlined">content_copy</span>
+                    {copiedAccount === '3520522769' ? 'COPIED' : 'COPY'}
+                  </button>
+                </div>
                 <p className="gift-owner">ANNISA FIRDAUS</p>
               </article>
             </div>
