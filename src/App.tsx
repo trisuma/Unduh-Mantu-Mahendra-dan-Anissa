@@ -10,7 +10,7 @@ import galleryImage3 from './assets/44b59c61-5668-45a1-af3d-e9391f212932.jpg'
 import galleryImage4 from './assets/45ac179b-bab8-427e-870d-349af2b84fdd.jpg'
 import galleryImage5 from './assets/66957763-d81d-45bd-a1f7-94911fcb5adc.jpg'
 import batikAwan from './assets/batik-awan.webp'
-import batikBunga from './assets/batik-bunga.png'
+import batikBunga from './assets/bunga-batik2.png'
 import bungaBatik from './assets/bunga-batik2.png'
 import gununganWayang from './assets/gunungan wayang .png'
 
