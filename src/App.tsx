@@ -295,11 +295,13 @@ function App() {
         </div>
 
         <div className="quote-content reveal-item">
-          <h3>Q.S. AR - RUM 21</h3>
+          <h3>QS Ar-Rum : 21</h3>
           <p>
-            &quot;Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu
-            istri-istri dari jenismu sendiri, supaya kamu merasa ketenangan dan ketentraman
-            hatimu, dan dijadikan-Nya di antaramu rasa kasih sayang.&quot;
+            &quot;Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan 
+            pasangan-pasangan untukmu dari jenismu sendiri, agar kamu 
+            cenderung dan merasa tenteram kepadanya, dan Dia menjadikan 
+            di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu 
+            benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir."&quot;
           </p>
         </div>
       </section>
