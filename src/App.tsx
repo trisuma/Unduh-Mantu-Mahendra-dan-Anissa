@@ -609,12 +609,10 @@ function App() {
 
         <div className="closing-content reveal-item">
           <p className="closing-message">
-            Menjadi sebuah kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dalam
-            hari bahagia kami. Terima kasih atas segala ucapan, doa, dan perhatian yang diberikan.
+            Merupakan suatu kebahagiaan dan kehormatan bagi kami, apabila Bapak/Ibu/Saudara/i,
+            berkenan hadir dan memberikan doa restu kepada kami.
           </p>
-          <p className="closing-note">Sampai jumpa di hari bahagia kami</p>
           <h2>Mahendra &amp; Annisa</h2>
-          <p className="closing-couple">Beserta Keluarga</p>
           <div className="monogram">M&amp;A</div>
           <p className="copyright">All rights reserved © 2026</p>
         </div>
