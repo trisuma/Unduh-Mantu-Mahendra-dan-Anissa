@@ -274,7 +274,7 @@ function App() {
                 <p className="person-role">Pengantin Pria</p>
                 <h3>Mahendra</h3>
                 <p className="person-meta">Briptu Mahendra Surya Trisuma, S.S.</p>
-                <p className="person-parents">Putra dari Bapak Surya Trisuma &amp; Ibu Yuliana</p>
+                <p className="person-parents">Putra Pertama Dari Bapak Sutrisno &amp; Ibu Siti Umayah</p>
                 <a
                   className="instagram-button"
                   href="https://www.instagram.com/suryatrisuma?igsi=MXRpOTFta3c4cThrbA=="
@@ -299,8 +299,8 @@ function App() {
               <div className="person-copy">
                 <p className="person-role">Pengantin Wanita</p>
                 <h3>Annisa</h3>
-                <p className="person-meta">Annisa Firdaus, A. Md. Keb.</p>
-                <p className="person-parents">Putri dari Bapak Firdaus &amp; Ibu Rina</p>
+                <p className="person-meta">Annisa Firdaus, A.Md. Keb.</p>
+                <p className="person-parents">Putri Pertama dari Bapak Sudarman Thaher, A.Md.Kom. &amp; Ibu Nina Agustina, A.Md. Keb.</p>
                 <a
                   className="instagram-button"
                   href="https://www.instagram.com/annisafirdaus__?igsi=cGlmOXd3bWw3OWUw"
