@@ -93,7 +93,7 @@ function App() {
     if (!invitationOpen) return
 
     const revealItems = Array.from(
-      document.querySelectorAll<HTMLElement>('.reveal, .reveal-card, .reveal-item, .ornament'),
+      document.querySelectorAll<HTMLElement>('.reveal, .reveal-card, .reveal-item, .section-ornament'),
     )
 
     if (!revealItems.length) return
@@ -114,7 +114,13 @@ function App() {
     )
 
     revealItems.forEach((item, index) => {
-      item.style.transitionDelay = item.classList.contains('ornament') ? '0ms' : `${index * 120}ms`
+      item.style.transitionDelay = item.classList.contains('section-ornament') ? '0ms' : `${index * 120}ms`
+
+      if (item.classList.contains('section-ornament')) {
+        item.classList.add('is-visible')
+        return
+      }
+
       observer.observe(item)
     })
 
@@ -257,29 +263,55 @@ function App() {
           </div>
 
           <div className="profiles-grid">
-            <div className="person-card reveal-card">
+            <article className="person-card person-card--groom reveal-card">
               <div className="portrait-frame">
                 <img
                   alt="Groom Mahendra portrait in traditional attire"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuDniNKVAjLqTOfv5tfFejHdzGCXHoMHwzN5Z7slxAGynVw3-OyCFNImPImaEHVXCSvdeTZ6lUH_lstyQnqED8Rcx26TD65ehx8s6qFbbuNW22rbxMJLI7ES1BLDEswvSESSvsMVGTnZYR3d8NpCVYJIBrYQtAHpfZYIsIVrLSuRF6omiSLvIeFMe5wIddqI7bFH29qJM-xoZIadpghghOj6Qjt5JuARyzXOg8vS6rMPzf2aOFUeVmk9WvpgzjxYjGQqSS4"
                 />
               </div>
-              <h3>Mahendra</h3>
-              <p className="person-meta">Briptu Mahendra Surya Trisuma, S.S.</p>
-            </div>
+              <div className="person-copy">
+                <p className="person-role">Pengantin Pria</p>
+                <h3>Mahendra</h3>
+                <p className="person-meta">Briptu Mahendra Surya Trisuma, S.S.</p>
+                <p className="person-parents">Putra dari Bapak Surya Trisuma &amp; Ibu Yuliana</p>
+                <a
+                  className="instagram-button"
+                  href="https://www.instagram.com/suryatrisuma?igsi=MXRpOTFta3c4cThrbA=="
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span className="material-symbols-outlined">alternate_email</span>
+                  @suryatrisuma
+                </a>
+              </div>
+            </article>
 
             <div className="ampersand">&amp;</div>
 
-            <div className="person-card">
+            <article className="person-card person-card--bride reveal-card">
               <div className="portrait-frame">
                 <img
                   alt="Bride Annisa portrait in traditional attire"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsVVDddh8km3_eDe-TnBBFtHAm5_B55977OOppocX0dPBB018kPRDiayRjVDBG2BGc1PIia57iHgq1wqW0apA9hEr3mpJKJNUccE1bO2ubErmv9pldbCXd9f-pJC-VhDDRItdfxB2NxBBQ2pEsHP1r2bSad4r_U_ad-lvFBzdUavIrmOJ__AWVlFsTTp8yAoDRLC7Md2myx7qCI91dTc9DbyRSC4e7C3hcGzg4fQpim_PYH_hiLQhgt3EAnLLXGY0G9Y0"
                 />
               </div>
-              <h3>Annisa</h3>
-              <p className="person-meta">Annisa Firdaus, A. Md. Keb.</p>
-            </div>
+              <div className="person-copy">
+                <p className="person-role">Pengantin Wanita</p>
+                <h3>Annisa</h3>
+                <p className="person-meta">Annisa Firdaus, A. Md. Keb.</p>
+                <p className="person-parents">Putri dari Bapak Firdaus &amp; Ibu Rina</p>
+                <a
+                  className="instagram-button"
+                  href="https://www.instagram.com/annisafirdaus__?igsi=cGlmOXd3bWw3OWUw"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span className="material-symbols-outlined">alternate_email</span>
+                  @annisafirdaus__
+                </a>
+              </div>
+            </article>
           </div>
         </div>
         </section>
